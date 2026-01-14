@@ -2,4 +2,23 @@
     color: #0f766e;
 }
 
+.dashboard {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.dashboard-header {
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 1rem;
+}
+
+.dashboard-section {
+    padding: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+}
+
+.dashboard-section h3 {
+    margin-top: 0;
+}
  

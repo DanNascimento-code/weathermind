@@ -1,13 +1,50 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block title %}
+Dashboard | WeatherMind
+{% endblock %}
+
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'dashboard/css/dashboard.css' %}">
 {% endblock %}
 
 {% block content %}
-<h2 class="dashboard-title">Dashboard</h2>
-<p>Clima atual e insights personalizados aparecerão aqui.</p>
+<section class="dashboard">
+
+    <header class="dashboard-header">
+        <h2>Dashboard Climático</h2>
+        <p>Visão geral das condições atuais</p>
+    </header>
+
+    <section class="dashboard-section location">
+        <h3>Localização</h3>
+
+        {% if location %}
+            <p>{{ location }}</p>
+        {% else %}
+            <p>Localização não definida</p>
+        {% endif %}
+   </section>
+
+
+    <section class="dashboard-section current-weather">
+        <h3>Clima atual</h3>
+        <p>Dados climáticos indisponíveis</p>
+    </section>
+
+    <section class="dashboard-section forecast">
+        <h3>Previsão</h3>
+        <p>Previsão ainda não carregada</p>
+    </section>
+
+    <section class="dashboard-section insights">
+        <h3>Insights personalizados</h3>
+        <p>Em breve</p>
+    </section>
+
+</section>
 {% endblock %}
+
 
 
