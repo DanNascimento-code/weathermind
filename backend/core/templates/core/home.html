@@ -25,9 +25,45 @@
             </li>
         {% endfor %}
     </ul>
+    
+    <div class="weather-chart-container">
+        <h3>Temperatura ao Longo do Tempo</h3>
+        <canvas id="temperatureChart"></canvas>
+    </div>
 {% endif %}
 
 {% if error %}
     <p style="color:red">{{ error }}</p>
 {% endif %}
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var labels = JSON.parse('{{ labels|default:"[]"|safe }}');
+    var temperatures = JSON.parse('{{ temperatures|default:"[]"|safe }}');
+
+    if (labels.length && temperatures.length) {
+        const ctx = document.getElementById('temperatureChart');
+
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Temperatura (°C)',
+                        data: temperatures,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+    }
+</script>
 {% endblock %}
