@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render
 from weather.models import WeatherRecord
 from core.services.climate_service import ClimateService
@@ -9,6 +10,8 @@ def home(request):
     weather_data = None
     error_message = None
     history = []
+    labels = []
+    temperatures = []
 
     if city:
         service = ClimateService()
@@ -33,10 +36,21 @@ def home(request):
             city__iexact=city
         ).order_by('-created_at')[:10]
 
+        if history:
+            # Reverter para ordem cronológica para o gráfico
+            chart_data = reversed(history)
+            labels = [record.created_at.strftime("%d/%m %H:%M") for record in chart_data]
+            
+            # Recriar chart_data para não consumir o reversed
+            chart_data = reversed(history)
+            temperatures = [record.temperature for record in chart_data]
+
     context = {
         "weather": weather_data,
         "error": error_message,
         "history": history,
+        "labels": json.dumps(labels),
+        "temperatures": json.dumps(temperatures),
     }
 
     return render(request, "core/home.html", context)

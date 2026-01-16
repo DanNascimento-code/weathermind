@@ -6,6 +6,7 @@
     <button type="submit">Buscar</button>
 </form>
 
+
 {% if weather %}
     <h2>{{ weather.city }}</h2>
     <p>Temperatura: {{ weather.temperature }}°C</p>
@@ -25,25 +26,24 @@
             </li>
         {% endfor %}
     </ul>
-    
     <div class="weather-chart-container">
         <h3>Temperatura ao Longo do Tempo</h3>
-        <canvas id="temperatureChart"></canvas>
-    </div>
-{% endif %}
-
-{% if error %}
-    <p style="color:red">{{ error }}</p>
-{% endif %}
+    </div>    
+    {% endif %}
 
 
 {% endblock %}
 
 {% block extra_js %}
+<div>
+    <canvas id="temperatureChart"></canvas>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-    var labels = JSON.parse('{{ labels|default:"[]"|safe }}');
-    var temperatures = JSON.parse('{{ temperatures|default:"[]"|safe }}');
+    const labels = JSON.parse('{{ labels|safe }}');
+    const temperatures = JSON.parse('{{ temperatures|safe }}');
 
     if (labels.length && temperatures.length) {
         const ctx = document.getElementById('temperatureChart');
